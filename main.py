@@ -1,7 +1,7 @@
-import imp
-from urllib import response
-from fastapi import FastAPI
-from fastapi.responses import FileResponse , StreamingResponse,JSONResponse ,RedirectResponse
+from fastapi import FastAPI, Request
+from fastapi.responses import FileResponse , RedirectResponse
+from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 import os
 import random
 
@@ -14,6 +14,8 @@ app = FastAPI(
     },
 
 )
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 def getRandomFile(path):
@@ -32,21 +34,26 @@ async def home():
 
 @app.get("/tea")
 def teajson():
-    x = "teacuppics/{}".format(getRandomFile("teacuppics"))
+    x = "static/teacuppics/{}".format(getRandomFile("static/teacuppics"))
     return FileResponse(x)
 
-@app.get("/json/tea")
-def tea():
-    return JSONResponse(content={'teacuppics': getRandomFile("teacuppics")})
+
+@app.get('/json/tea')
+async def jsontea(request: Request) -> JSONResponse:
+    img = "teacuppics/{}".format(getRandomFile("static/teacuppics"))
+    img_url = request.url_for('static', path=img)
+    return {'img_url': img_url}
 
 @app.get("/coffee")
 def coffee():
-    x = "coffeecups/{}".format(getRandomFile("coffeecups"))
+    x = "static/coffeecups/{}".format(getRandomFile("coffeecups"))
     return FileResponse(x)
 
 @app.get("/json/coffee")
-def coffeejson():
-    return JSONResponse(content={'coffeecups': getRandomFile("coffeecups")})
+def coffeejson(request: Request) -> JSONResponse:
+    img = "coffeecups/{}".format(getRandomFile("static/coffeecups"))
+    img_url = request.url_for('static', path=img)
+    return {'img_url': img_url}
 
 
    
