@@ -31,7 +31,7 @@ async def home():
   return RedirectResponse("/docs")
 
 @app.get("/tea")
-def tea():
+def teajson():
     x = "teacuppics/{}".format(getRandomFile("teacuppics"))
     return FileResponse(x)
 
@@ -40,9 +40,13 @@ def tea():
     return JSONResponse(content={'teacuppics': getRandomFile("teacuppics")})
 
 @app.get("/coffee")
-def tea():
+def coffee():
     x = "coffeecups/{}".format(getRandomFile("coffeecups"))
     return FileResponse(x)
+
+@app.get("/json/coffee")
+def coffeejson():
+    return JSONResponse(content={'coffeecups': getRandomFile("coffeecups")})
 
 
    
