@@ -1,14 +1,19 @@
 import imp
 from urllib import response
 from fastapi import FastAPI
-from fastapi.responses import FileResponse , StreamingResponse
+from fastapi.responses import FileResponse , StreamingResponse,JSONResponse ,RedirectResponse
 import os
 import random
 
-from fastapi import FastAPI
-from fastapi.responses import RedirectResponse
+app = FastAPI(
+    title = "HotBeverageAPI",
+    description="Gets a HotBeverage from the database",
+    license_info={
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT",
+    },
 
-app = FastAPI()
+)
 
 
 def getRandomFile(path):
@@ -29,6 +34,10 @@ async def home():
 def tea():
     x = "teacuppics/{}".format(getRandomFile("teacuppics"))
     return FileResponse(x)
+
+@app.get("/json/tea")
+def tea():
+    return JSONResponse(content={'teacuppics': getRandomFile("teacuppics")})
 
 @app.get("/coffee")
 def tea():
