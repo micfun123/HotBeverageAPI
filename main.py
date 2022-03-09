@@ -7,7 +7,7 @@ import random
 
 app = FastAPI(
     title = "HotBeverageAPI",
-    description="Gets a HotBeverage from the database",
+    description="Gets a HotBeverage from the database. \n This what made by Michael twitter = https://twitter.com/Michaelrbparker ",
     license_info={
         "name": "MIT",
         "url": "https://opensource.org/licenses/MIT",
