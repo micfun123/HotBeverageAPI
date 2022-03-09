@@ -34,13 +34,13 @@ async def home():
   return RedirectResponse("/docs")
 
 @app.get("/tea")
-def teajson():
+def tea():
     x = "static/teacuppics/{}".format(getRandomFile("static/teacuppics"))
     return FileResponse(x)
 
 
 @app.get('/json/tea')
-async def jsontea(request: Request) -> JSONResponse:
+async def teajson(request: Request) -> JSONResponse:
     img = "teacuppics/{}".format(getRandomFile("static/teacuppics"))
     img_url = request.url_for('static', path=img)
     return {'img_url': img_url}
