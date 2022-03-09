@@ -10,6 +10,7 @@ from fastapi.responses import RedirectResponse
 
 app = FastAPI()
 
+
 def getRandomFile(path):
   """
   Returns a random filename, chosen among the files of the given path.
